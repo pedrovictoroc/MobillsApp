@@ -1,17 +1,14 @@
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 
-import Auth from './Components/Auth/auth'
+import Login from './Components/Login/Login'
 
 const Routes = createAppContainer(
     createStackNavigator({
-        Auth
+        Login
     },{
         defaultNavigationOptions:{
-            headerTitleAlign: 'center',
-            headerStyle:{
-                backgroundColor: '#f5f5f5'
-            }
+            headerShown: false
         }
     })
 )
