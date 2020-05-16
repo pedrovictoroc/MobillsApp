@@ -4,11 +4,17 @@ import { View } from 'react-native'
 
 import { useNavigation } from '@react-navigation/native'
 
+import * as firebase from 'firebase'
+
 import { Welcome, Card, InputBlock, UserInput, PasswordInput, InputArea,  LoginButton, LoginButtonText, SignUpButton, SignUpText } from './styles'
 
 import Asset from './asset.svg'
 
 import SvgUri from 'react-native-svg-uri'
+
+import { firebaseConfig } from '../../firebaseInfos'
+
+firebase.initializeApp(firebaseConfig)
 
 export default function Login(){
 
@@ -21,10 +27,16 @@ export default function Login(){
         navigator.navigate('SignUp')
     }
 
-    function handleSubmit(){
-        console.log(username)
-        console.log(password)
-    }
+    async function handleLogin(){
+        console.log('oi')
+            
+        try{
+            await firebase.auth().createUserWithEmailAndPassword(username, password)
+            navigateToSignUp()
+        }catch(e){
+            console.log(e)
+        }
+       }
 
     return (
         <View style={{alignItems:"center", flex: 1}}>
@@ -40,7 +52,7 @@ export default function Login(){
             
             
                 <LoginButton>
-                    <LoginButtonText onPress = {() => handleSubmit()}> Login </LoginButtonText>
+                    <LoginButtonText onPress = {() => handleLogin()}> Login </LoginButtonText>
                 </LoginButton>
             </Card>
             
