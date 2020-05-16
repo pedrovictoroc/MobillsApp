@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "836303754628",
+    "firebase_url": "https://mobillsproject.firebaseio.com",
+    "project_id": "mobillsproject",
+    "storage_bucket": "mobillsproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836303754628:android:2cad157d19137393fe39d1",
+        "android_client_info": {
+          "package_name": "com.mobillsproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836303754628-1v93gbcrsqjuules6bjl63b9iq6l9407.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobillsproject",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "836303754628-npn33j7na6167g1v4ifml16luh9rrqmv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_q6OyXMBlYLiVLYVi3K39PvtV9HcibP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836303754628-npn33j7na6167g1v4ifml16luh9rrqmv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
