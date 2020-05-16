@@ -4,7 +4,7 @@ import { View } from 'react-native'
 
 import { useNavigation } from '@react-navigation/native'
 
-import * as firebase from 'firebase'
+import auth from '@react-native-firebase/auth'
 
 import { Welcome, Card, InputBlock, UserInput, PasswordInput, InputArea,  LoginButton, LoginButtonText, SignUpButton, SignUpText } from './styles'
 
@@ -12,13 +12,9 @@ import Asset from './asset.svg'
 
 import SvgUri from 'react-native-svg-uri'
 
-import { firebaseConfig } from '../../firebaseInfos'
-
-firebase.initializeApp(firebaseConfig)
-
 export default function Login(){
 
-    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const navigator = useNavigation()
@@ -28,15 +24,19 @@ export default function Login(){
     }
 
     async function handleLogin(){
-        console.log('oi')
-            
         try{
-            await firebase.auth().createUserWithEmailAndPassword(username, password)
-            navigateToSignUp()
-        }catch(e){
-            console.log(e)
+            const response = await auth().signInWithEmailAndPassword(email, password)
+            
+            if(response.user){
+                navigateToSignUp()
+            }
+
+        }catch(e){    
+            alert('Algo parece estar errado, verifique seu email e senha!')
         }
-       }
+    }
+
+    
 
     return (
         <View style={{alignItems:"center", flex: 1}}>
@@ -44,15 +44,15 @@ export default function Login(){
         
             <Card>
                 <InputBlock>
-                    <UserInput>Username</UserInput>
-                    <InputArea onChangeText= {(inputUser) => { setUsername(inputUser) }}/>
+                    <UserInput>Email</UserInput>
+                    <InputArea value={email} onChangeText= {(inputUser) => { setEmail(inputUser) }}/>
                     <PasswordInput>Password</PasswordInput>
-                    <InputArea onChangeText= {(inputPassword) => { setPassword(inputPassword) }}/>
+                    <InputArea value={password} secureTextEntry={true} onChangeText= {(inputPassword) => { setPassword(inputPassword) }}/>
                 </InputBlock>
             
             
-                <LoginButton>
-                    <LoginButtonText onPress = {() => handleLogin()}> Login </LoginButtonText>
+                <LoginButton onPress = {() => handleLogin()}>
+                    <LoginButtonText> Login </LoginButtonText>
                 </LoginButton>
             </Card>
             

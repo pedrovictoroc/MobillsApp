@@ -1,18 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { View } from 'react-native'
 
 import { useNavigation } from '@react-navigation/native'
+
+import auth from '@react-native-firebase/auth'
 
 import { SignUpMessage, Card, InputBlock, UserInput, PasswordInput, InputArea,  SignUpButton, SignUpButtonText, GoBackButton, GoBackText } from './styles'
 
 
 export default function SignUp(){
 
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+
     const navigator = useNavigation()
 
     function navigateToLogin(){
         navigator.navigate('Login')
+    }
+
+    async function handleSignUp(){
+        if(password === "" || password === "" || confirmPassword === ""){
+            alert('Preencha todos os campos!')
+            return ;
+        }
+
+        if( password !=confirmPassword){
+            alert('Erro: Senhas estão diferentes!')
+            return ;
+        }
+
+        try{
+            const response = await auth().createUserWithEmailAndPassword(email, password)
+            
+            navigateToLogin()
+        }catch(error){
+            alert('Essa conta já existe!')
+        }
     }
 
     return (
@@ -21,16 +47,16 @@ export default function SignUp(){
         
             <Card>
                 <InputBlock>
-                    <UserInput>Username</UserInput>
-                    <InputArea/>
+                    <UserInput>Email</UserInput>
+                    <InputArea value={email} onChangeText= {(inputUser) => { setEmail(inputUser) }}/>
                     <PasswordInput>Password</PasswordInput>
-                    <InputArea/>
+                    <InputArea value={password} onChangeText= {(inputUser) => { setPassword(inputUser) }}/>
                     <PasswordInput>Confirm Password</PasswordInput>
-                    <InputArea/>
+                    <InputArea value={confirmPassword} onChangeText= {(inputUser) => { setConfirmPassword(inputUser) }}/>
                 </InputBlock>
             
             
-                <SignUpButton>
+                <SignUpButton onPress={() => handleSignUp()}>
                     <SignUpButtonText>Finalizar</SignUpButtonText>
                 </SignUpButton>
             </Card>
