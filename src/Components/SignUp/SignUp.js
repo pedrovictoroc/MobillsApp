@@ -21,6 +21,10 @@ export default function SignUp(){
         navigator.navigate('Login')
     }
 
+    function navigateToMain(){
+        navigator.navigate('Main')
+    }
+
     async function handleSignUp(){
         if(password === "" || password === "" || confirmPassword === ""){
             alert('Preencha todos os campos!')
@@ -35,7 +39,7 @@ export default function SignUp(){
         try{
             const response = await auth().createUserWithEmailAndPassword(email, password)
             
-            navigateToLogin()
+            navigateToMain()
         }catch(error){
             alert('Essa conta já existe!')
         }

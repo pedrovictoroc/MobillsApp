@@ -23,12 +23,21 @@ export default function Login(){
         navigator.navigate('SignUp')
     }
 
+    function navigateToMain(){
+        navigator.navigate('Main')
+    }
+
     async function handleLogin(){
+        if(password === "" || password === ""){
+            alert('Preencha todos os campos!')
+            return ;
+        }
+
         try{
             const response = await auth().signInWithEmailAndPassword(email, password)
             
             if(response.user){
-                navigateToSignUp()
+                navigateToMain()
             }
 
         }catch(e){    
