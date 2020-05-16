@@ -90,7 +90,7 @@ export const LoginButtonText = styled.Text`
 `
 
 export const SignUpButton = styled.TouchableOpacity`
-    position: absolute;
+    margin-top: 280px;
     bottom: 30px;
 
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { View } from 'react-native'
 
@@ -12,10 +12,18 @@ import SvgUri from 'react-native-svg-uri'
 
 export default function Login(){
 
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+
     const navigator = useNavigation()
 
     function navigateToSignUp(){
         navigator.navigate('SignUp')
+    }
+
+    function handleSubmit(){
+        console.log(username)
+        console.log(password)
     }
 
     return (
@@ -25,14 +33,14 @@ export default function Login(){
             <Card>
                 <InputBlock>
                     <UserInput>Username</UserInput>
-                    <InputArea/>
+                    <InputArea onChangeText= {(inputUser) => { setUsername(inputUser) }}/>
                     <PasswordInput>Password</PasswordInput>
-                    <InputArea/>
+                    <InputArea onChangeText= {(inputPassword) => { setPassword(inputPassword) }}/>
                 </InputBlock>
             
             
                 <LoginButton>
-                    <LoginButtonText> Login </LoginButtonText>
+                    <LoginButtonText onPress = {() => handleSubmit()}> Login </LoginButtonText>
                 </LoginButton>
             </Card>
             
