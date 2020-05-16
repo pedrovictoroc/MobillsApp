@@ -88,9 +88,8 @@ export const SignUpButtonText = styled.Text`
 `
 
 export const GoBackButton = styled.TouchableOpacity`
-    position: absolute;
+    margin-top: 80px;
     bottom: 30px;
-
 
     align-items: center;
     justify-content: center;
