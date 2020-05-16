@@ -13,7 +13,7 @@ export const Welcome = styled.Text`
     font-size: 28px;
     line-height: 33px;
 
-    color: #FFFFFF;
+    color: #000000;
 `
 
 export const Card = styled.View`
@@ -87,4 +87,23 @@ export const LoginButtonText = styled.Text`
     line-height: 21px;
 
     color: #FFFFFF;
+`
+
+export const SignUpButton = styled.TouchableOpacity`
+    position: absolute;
+    bottom: 30px;
+
+
+    align-items: center;
+    justify-content: center;
+`
+
+export const SignUpText = styled.Text`
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+
 `
