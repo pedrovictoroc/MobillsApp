@@ -54,9 +54,9 @@ export default function SignUp(){
                     <UserInput>Email</UserInput>
                     <InputArea value={email} onChangeText= {(inputUser) => { setEmail(inputUser) }}/>
                     <PasswordInput>Password</PasswordInput>
-                    <InputArea value={password} onChangeText= {(inputUser) => { setPassword(inputUser) }}/>
+                    <InputArea secureTextEntry={true} value={password} onChangeText= {(inputUser) => { setPassword(inputUser) }}/>
                     <PasswordInput>Confirm Password</PasswordInput>
-                    <InputArea value={confirmPassword} onChangeText= {(inputUser) => { setConfirmPassword(inputUser) }}/>
+                    <InputArea secureTextEntry={true} value={confirmPassword} onChangeText= {(inputUser) => { setConfirmPassword(inputUser) }}/>
                 </InputBlock>
             
             

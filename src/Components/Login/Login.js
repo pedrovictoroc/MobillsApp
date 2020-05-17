@@ -14,8 +14,8 @@ import SvgUri from 'react-native-svg-uri'
 
 export default function Login(){
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("pedrovictor@alu.ufc.br")
+    const [password, setPassword] = useState("87835018")
 
     const navigator = useNavigation()
 
