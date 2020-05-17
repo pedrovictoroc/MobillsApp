@@ -1,11 +1,23 @@
 import React, { useState } from 'react'
 
-import { View, Text } from 'react-native'
+import firestore from '@react-native-firebase/firestore'
+
+import { View, TouchableOpacity,Text } from 'react-native'
 
 export default function Main(){
+
+    async function search(){
+        const res = await firestore().collection('Despesas').doc('pyU7zyCmSbfkzCLeHYCk').get()
+        
+        const {descricao} = res.data()
+        console.log(descricao)
+    }
+
     return(
         <View style={{flex: 1}}>
-            <Text> Teste </Text>
+            <TouchableOpacity onPress={ () => search()}>
+                <Text> Teste </Text>
+            </TouchableOpacity>
         </View>
     )
 }
