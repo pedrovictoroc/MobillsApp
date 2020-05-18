@@ -27,7 +27,7 @@ export default function Main(){
     const navigator = useNavigation()
 
     function navigateToNewOperation(){
-        navigator.navigate()
+        navigator.navigate('NewOperation')
     }
 
     useEffect(()=>{
@@ -69,7 +69,7 @@ export default function Main(){
                 </HeaderText>
             </MoneyHeader>
 
-            <NewTransactionButton onPress = {navigateToNewOperation()} width={Dimensions.get('window').width - 24}>
+            <NewTransactionButton onPress = {() => navigateToNewOperation()} width={Dimensions.get('window').width - 24}>
                     <NewTransactionText>
                         Nova operação
                     </NewTransactionText>
@@ -90,8 +90,8 @@ export default function Main(){
                         </PropertyContainer>
 
                         <OperationButtomContainer>
-                            <OperationButtom> A </OperationButtom>
-                            <OperationButtom> C </OperationButtom>
+                            {operation.item._data.concluido === true ? console.log(operation.item._data.concluido) : <OperationButtom> A </OperationButtom>}
+                            <OperationButtom onPress={() => console.log(operation.item._data.concluido)}> C </OperationButtom>
                         </OperationButtomContainer>
                     </OperationContainer>
                 )}
