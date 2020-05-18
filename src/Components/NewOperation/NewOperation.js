@@ -8,6 +8,8 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import firestore from '@react-native-firebase/firestore'
 
+import CalendarIcon from 'react-native-vector-icons/FontAwesome'
+
 import { Card, 
          InputBlock, 
          UserInput, 
@@ -69,10 +71,11 @@ export default function NewOperation(){
                     <InputArea value={description} onChangeText= {(inputUser) => { setDescription(inputUser) }}/>
                     <DataInput>Data</DataInput>
                     
-                    <DateTrigger onPress={() => setShow(true)}>
-                        <DateTriggerText>Selecione a data</DateTriggerText>
-                    </DateTrigger>
-
+                    <CalendarIcon onPress={() => setShow(true)} 
+                                  name='calendar'
+                                  size={20}
+                                  style={{paddingTop: 5}}/>
+                    
                     {show && <DateTimePicker
                         testID="dateTimePicker"
                         timeZoneOffsetInMinutes={0}
