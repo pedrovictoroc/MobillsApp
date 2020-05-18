@@ -70,10 +70,11 @@ export const OperationValue = styled.Text`
     color: ${props => props.type === 'despesa'? '#F8777D' : '#65BCBF'};
 `
 
-export const OperationButtomContainer = styled.TouchableOpacity`
+export const OperationButtomContainer = styled.View`
     justify-content:flex-end;
 `
 
-export const OperationButtom = styled.Text`
+export const OperationButtom = styled.TouchableOpacity`
     font-size: 20px;
+    padding-bottom: ${props => props.value === 'done' ? '20px' : '0px'};
 `

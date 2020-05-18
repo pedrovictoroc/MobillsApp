@@ -8,8 +8,7 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import firestore from '@react-native-firebase/firestore'
 
-import { SignUpMessage,
-         Card, 
+import { Card, 
          InputBlock, 
          UserInput, 
          DataInput,

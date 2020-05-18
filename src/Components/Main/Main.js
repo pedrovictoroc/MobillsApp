@@ -6,6 +6,10 @@ import { View ,StatusBar, Dimensions} from 'react-native'
 
 import firestore from '@react-native-firebase/firestore'
 
+import DoneIcon from 'react-native-vector-icons/MaterialIcons'
+
+import TrashIcon from 'react-native-vector-icons/FontAwesome5'
+
 import { MoneyHeader, 
          HeaderText, 
          HeaderTextBold, 
@@ -90,8 +94,21 @@ export default function Main(){
                         </PropertyContainer>
 
                         <OperationButtomContainer>
-                            {operation.item._data.concluido === true ? console.log(operation.item._data.concluido) : <OperationButtom> A </OperationButtom>}
-                            <OperationButtom onPress={() => console.log(operation.item._data.concluido)}> C </OperationButtom>
+                            <OperationButtom onPress={() => console.log(operation.item._data.concluido)} value={'done'}>
+                                {operation.item._data.concluido === true ?
+                                    <DoneIcon name="done" size={20}
+                                              color="#65BCBF" />
+                                        : 
+                                <DoneIcon name="done"
+                                          size={20}
+                                          color="#F8777D" />}
+                            </OperationButtom>
+
+                            <OperationButtom onPress={() => console.log(operation.item._data.concluido)}>
+                                <TrashIcon name="trash"
+                                           size={20}
+                                           /> 
+                            </OperationButtom>
                         </OperationButtomContainer>
                     </OperationContainer>
                 )}
