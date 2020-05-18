@@ -41,11 +41,24 @@ export default function Main(){
         navigator.navigate('Details',{item})
     }
 
+    function removeByAttr(arr, attr, value){
+        var i = arr.length;
+        while(i--){
+           if( arr[i] 
+               && arr[i].hasOwnProperty(attr) 
+               && (arguments.length > 2 && arr[i][attr] === value ) ){ 
+    
+               arr.splice(i,1);
+    
+           }
+        }
+        return arr;
+    }
+
     async function handleDelete(data){
         const ops = operations
 
-        
-        const filtered =ops.filter((item)=> console.log(toString(item.ID) !== toString(data.ID)))
+        const filtered = removeByAttr(ops, 'ID', data.ID)
 
         await firestore()
                 .collection('Usuarios')
