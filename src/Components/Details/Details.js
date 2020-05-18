@@ -23,7 +23,7 @@ export default function Details(){
 
     const operation = route.params.item
 
-    const data = new Date(operation._data.data._seconds*1000)
+    const data = new Date(operation.data._seconds*1000)
 
     function navigateToMain(){
         navigator.goBack()
@@ -34,17 +34,17 @@ export default function Details(){
             <Card>
                 <InputBlock>
                     <UserInput>Valor</UserInput>
-                    <InputArea>R$ {operation._data.valor} </InputArea>
+                    <InputArea>R$ {operation.valor} </InputArea>
                     <DataInput>Descrição</DataInput>
-                    <InputArea>{operation._data.descricao}</InputArea>
+                    <InputArea>{operation.descricao}</InputArea>
                     <CalendarIcon name='calendar'
                                   size={20}
                                   style={{paddingTop: 5}}/>
                         <InputArea>{data.getDate()}/{data.getUTCMonth()}/{data.getFullYear()}</InputArea>
                     <DataInput>Tipo</DataInput>
-                    <InputArea>receita</InputArea>
+                    <InputArea>{operation.type}</InputArea>
                     <DataInput>Pagamento</DataInput>
-                    <InputArea> pago </InputArea>
+                    <InputArea>{operation.concluido === true ? 'pago' : 'não pago'}</InputArea>
                 </InputBlock>
             </Card>
 

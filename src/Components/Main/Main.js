@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 import { View ,StatusBar, Dimensions} from 'react-native'
 
@@ -29,73 +29,64 @@ export default function Main(){
     const [totalValue, setTotalValue] = useState("")
 
     const navigator = useNavigation()
+    const route = useRoute();
+
+    const ref = route.params.ref
 
     function navigateToNewOperation(){
-        navigator.navigate('NewOperation')
+        navigator.navigate('NewOperation',{ref})
     }
 
     function navigateToDetails(item){
         navigator.navigate('Details',{item})
     }
 
-    async function handleDelete({_data: data}){
-        const res = await firestore()
-              .collection('Usuarios')
-              .doc('wMWMt47Fl3SWBq3Hwyps')
-              .collection('Operacoes')
-              .where('ID','==' ,data.ID)
-              .get()
-              
-        const ref = res._docs[0]._ref._documentPath._parts[3]
+    async function handleDelete(data){
+        const ops = operations
+
+        
+        const filtered =ops.filter((item)=> console.log(toString(item.ID) !== toString(data.ID)))
+
         await firestore()
                 .collection('Usuarios')
-                .doc('wMWMt47Fl3SWBq3Hwyps')
-                .collection('Operacoes')
                 .doc(ref)
-                .delete()
-        
-        alert(`Operação no valor de R$${data.valor} deletada com sucesso!`)
+                .update({operations: filtered})
+
     }
 
-    async function handleDone({_data : data}){
+    async function handleDone(data){
+
         if (data.concluido){
             alert('O status será modificado para "não pago"')
         }
 
-        const res = await firestore()
-              .collection('Usuarios')
-              .doc('wMWMt47Fl3SWBq3Hwyps')
-              .collection('Operacoes')
-              .where('ID','==' ,data.ID)
-              .get()
+        const ops = operations
 
-        const ref = res._docs[0]._ref._documentPath._parts[3]
-    
-        const done = !data.concluido
+        ops.map((value, index)=>{
+            if(value.ID === data.ID){
+                const done = !data.concluido
+
+                value.concluido = done
+            }
+        })
 
         await firestore()
                 .collection('Usuarios')
-                .doc('wMWMt47Fl3SWBq3Hwyps')
-                .collection('Operacoes')
                 .doc(ref)
-                .update({concluido: done})
-        
+                .update({operations: ops})
     }
 
     useEffect(()=>{
         async function search(){
+
             const res = await firestore()
                         .collection('Usuarios')
-                        .doc('wMWMt47Fl3SWBq3Hwyps')
-                        .collection('Operacoes')
+                        .doc(ref)
                         .onSnapshot(query=>{
-                            const ops = []
-
-                            query.forEach(document =>{
-                                ops.push(document)
-                            })
+                            const ops = query._data.operations
 
                             setOperations(ops)
+                            
                         })
             
             //console.log(res.docs[0]._data)
@@ -112,11 +103,11 @@ export default function Main(){
             let x = 0;
 
             await operations.map((operation)=> {
-                if(operation._data.type == 'despesa'){
-                    x = x - Number(operation._data.valor)
+                if(operation.type == 'despesa'){
+                    x = x - Number(operation.valor)
                 
                 }else{
-                    x = x + Number(operation._data.valor)
+                    x = x + Number(operation.valor)
                 }
             })
         
@@ -150,15 +141,15 @@ export default function Main(){
                     <OperationContainer onPress={()=> navigateToDetails(item)}>
                         <PropertyContainer>
                             <OperationProperty>Valor: </OperationProperty>
-                            <OperationValue type = {item._data.type}>
-                                {item._data.type === 'despesa' ? '-' : '+'}
-                                {item._data.valor}
+                            <OperationValue type = {item.type}>
+                                {item.type === 'despesa' ? '-' : '+'}
+                                {item.valor}
                             </OperationValue>
                         </PropertyContainer>
 
                         <OperationButtomContainer>
                             <OperationButtom onPress={()=> handleDone(item)} value={'done'}>
-                                {item._data.concluido === true ?
+                                {item.concluido === true ?
                                     <DoneIcon name="done" size={20}
                                               color="#65BCBF" />
                                         : 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { View, Picker } from 'react-native'
 
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 import DateTimePicker from '@react-native-community/datetimepicker'
 
@@ -33,6 +33,9 @@ export default function NewOperation(){
 
 
     const navigator = useNavigation()
+    const route = useRoute();
+
+    const ref = route.params.ref
 
     function navigateToMain(){
         navigator.goBack()
@@ -50,14 +53,23 @@ export default function NewOperation(){
         }
 
 
-        const res = await firestore().collection('Usuarios').doc('wMWMt47Fl3SWBq3Hwyps').collection('Operacoes').add({valor: value, 
-                                descricao: description,
-                                data: date,
-                                type: selectedType,
-                                concluido: selectedPayment,
-                                ID: new Date().getTime()
-                            })
-    
+        const res = await firestore().collection('Usuarios').doc(ref).get()
+
+        await firestore()
+              .collection('Usuarios')
+              .doc(ref)
+              .update(
+                  {operations: 
+                    [...res._data.operations, 
+                    {descricao: description,
+                    data: date,
+                    type: selectedType,
+                    concluido: selectedPayment,
+                    valor: value,
+                    ID: new Date().getTime()
+                }]}
+              )
+
         navigateToMain()        
         
     }

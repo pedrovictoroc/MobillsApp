@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import auth from '@react-native-firebase/auth'
 
-import firebase from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore'
 
 import { SignUpMessage, Card, InputBlock, UserInput, PasswordInput, InputArea,  SignUpButton, SignUpButtonText, GoBackButton, GoBackText } from './styles'
 
@@ -23,8 +23,8 @@ export default function SignUp(){
         navigator.goBack()
     }
 
-    function navigateToMain(){
-        navigator.navigate('Main')
+    function navigateToMain(ref){
+        navigator.navigate('Main', {ref})
     }
 
     async function handleSignUp(){
@@ -41,9 +41,11 @@ export default function SignUp(){
         try{
             await auth().createUserWithEmailAndPassword(email, password)
             
-            await 
+            const res = await firestore().collection('Usuarios').add({email, operations: []})
+            
+            await firestore().collection('Usuarios').doc(res._documentPath._parts[1]).update({ref:res._documentPath._parts[1]})
 
-            navigateToMain()
+            navigateToMain(res._documentPath._parts[1])
         }catch(error){
             alert('Essa conta já existe!')
         }

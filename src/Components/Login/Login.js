@@ -6,12 +6,14 @@ import { useNavigation } from '@react-navigation/native'
 
 import auth from '@react-native-firebase/auth'
 
+import firestore from '@react-native-firebase/firestore'
+
 import { Welcome, Card, InputBlock, UserInput, PasswordInput, InputArea,  LoginButton, LoginButtonText, SignUpButton, SignUpText } from './styles'
 
 export default function Login(){
 
-    const [email, setEmail] = useState("pedrovictor@alu.ufc.br")
-    const [password, setPassword] = useState("87835018")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const navigator = useNavigation()
 
@@ -19,8 +21,11 @@ export default function Login(){
         navigator.navigate('SignUp')
     }
 
-    function navigateToMain(){
-        navigator.navigate('Main')
+    async function navigateToMain(){
+        const res = await firestore().collection('Usuarios').where('email','==',email).get()
+        const ref = res._docs[0]._data.ref
+
+        navigator.navigate('Main', {ref})
     }
 
     async function handleLogin(){
@@ -36,7 +41,8 @@ export default function Login(){
                 navigateToMain()
             }
 
-        }catch(e){    
+        }catch(e){
+            console.log(e)
             alert('Algo parece estar errado, verifique seu email e senha!')
         }
     }
