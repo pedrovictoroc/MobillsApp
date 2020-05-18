@@ -69,11 +69,12 @@ export default function SignUp(){
                 <SignUpButton onPress={() => handleSignUp()}>
                     <SignUpButtonText>Finalizar</SignUpButtonText>
                 </SignUpButton>
+
+
+                <SignUpButton style={{marginTop: 5}} onPress={() => navigateToLogin()}>
+                    <SignUpButtonText>Voltar</SignUpButtonText>
+                </SignUpButton>
             </Card>
-            
-            <GoBackButton onPress={() => { navigateToLogin() }}>
-                <GoBackText>Voltar</GoBackText>
-            </GoBackButton>
 
         </View>
     )

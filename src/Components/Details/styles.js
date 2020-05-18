@@ -101,7 +101,7 @@ export const SignUpButtonText = styled.Text`
 `
 
 export const ButtonSection = styled.View`
-    margin-top: 30px;
+    margin-top: 20px;
     flex-direction: row;
 
     justify-content: space-between;

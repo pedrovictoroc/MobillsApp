@@ -69,7 +69,7 @@ export const InputArea = styled.TextInput`
 
 export const LoginButton = styled.TouchableOpacity`
     
-    margin-top: 90px;
+    margin-top: 75px;
 
     background: #7a98F5;
     align-items: center;
@@ -90,7 +90,7 @@ export const LoginButtonText = styled.Text`
 `
 
 export const SignUpButton = styled.TouchableOpacity`
-    margin-top: 280px;
+    margin-top: 40px;
     bottom: 30px;
 
 

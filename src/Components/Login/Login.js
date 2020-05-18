@@ -65,11 +65,14 @@ export default function Login(){
                 <LoginButton onPress = {() => handleLogin()}>
                     <LoginButtonText> Login </LoginButtonText>
                 </LoginButton>
+            
+
+                <LoginButton style={{marginTop: 5}} onPress = {() => navigateToSignUp()}>
+                    <LoginButtonText> Cadastrar </LoginButtonText>
+                </LoginButton>
+
             </Card>
             
-            <SignUpButton onPress={() => { navigateToSignUp() }}>
-                <SignUpText>Clique aqui para criar uma conta</SignUpText>
-            </SignUpButton>
         </View>
     )
 }
