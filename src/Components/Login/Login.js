@@ -8,10 +8,6 @@ import auth from '@react-native-firebase/auth'
 
 import { Welcome, Card, InputBlock, UserInput, PasswordInput, InputArea,  LoginButton, LoginButtonText, SignUpButton, SignUpText } from './styles'
 
-import Asset from './asset.svg'
-
-import SvgUri from 'react-native-svg-uri'
-
 export default function Login(){
 
     const [email, setEmail] = useState("pedrovictor@alu.ufc.br")
