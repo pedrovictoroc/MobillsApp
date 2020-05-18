@@ -51,14 +51,17 @@ export default function NewOperation(){
             return ;
         }
 
+
         const res = await firestore().collection('Usuarios').doc('wMWMt47Fl3SWBq3Hwyps').collection('Operacoes').add({valor: value, 
                                 descricao: description,
                                 data: date,
                                 type: selectedType,
-                                concluido: selectedPayment})
+                                concluido: selectedPayment,
+                                ID: new Date().getTime()
+                            })
     
         navigateToMain()        
-
+        
     }
 
     return (
@@ -66,7 +69,7 @@ export default function NewOperation(){
             <Card>
                 <InputBlock>
                     <UserInput>Valor</UserInput>
-                    <InputArea value={value} onChangeText= {(inputUser) => { setValue(inputUser) }}/>
+                    <InputArea keyboardType={'numeric'} value={value} onChangeText= {(inputUser) => { setValue(inputUser) }}/>
                     <DataInput>Descrição</DataInput>
                     <InputArea value={description} onChangeText= {(inputUser) => { setDescription(inputUser) }}/>
                     <DataInput>Data</DataInput>

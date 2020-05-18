@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 
 import { useNavigation } from '@react-navigation/native'
 
@@ -34,34 +34,93 @@ export default function Main(){
         navigator.navigate('NewOperation')
     }
 
+    async function handleDelete({_data: data}){
+        const res = await firestore()
+              .collection('Usuarios')
+              .doc('wMWMt47Fl3SWBq3Hwyps')
+              .collection('Operacoes')
+              .where('ID','==' ,data.ID)
+              .get()
+              
+        const ref = res._docs[0]._ref._documentPath._parts[3]
+        await firestore()
+                .collection('Usuarios')
+                .doc('wMWMt47Fl3SWBq3Hwyps')
+                .collection('Operacoes')
+                .doc(ref)
+                .delete()
+        
+        alert(`Operação no valor de R$${data.valor} deletada com sucesso!`)
+    }
+
+    async function handleDone({_data : data}){
+        if (data.concluido){
+            alert('O status será modificado para "não pago"')
+        }
+
+        const res = await firestore()
+              .collection('Usuarios')
+              .doc('wMWMt47Fl3SWBq3Hwyps')
+              .collection('Operacoes')
+              .where('ID','==' ,data.ID)
+              .get()
+
+        const ref = res._docs[0]._ref._documentPath._parts[3]
+    
+        const done = !data.concluido
+
+        await firestore()
+                .collection('Usuarios')
+                .doc('wMWMt47Fl3SWBq3Hwyps')
+                .collection('Operacoes')
+                .doc(ref)
+                .update({concluido: done})
+        
+    }
+
     useEffect(()=>{
         async function search(){
-            const res = await firestore().collection('Usuarios').doc('wMWMt47Fl3SWBq3Hwyps').collection('Operacoes').get()
+            const res = await firestore()
+                        .collection('Usuarios')
+                        .doc('wMWMt47Fl3SWBq3Hwyps')
+                        .collection('Operacoes')
+                        .onSnapshot(query=>{
+                            const ops = []
+
+                            query.forEach(document =>{
+                                ops.push(document)
+                            })
+
+                            setOperations(ops)
+                        })
             
             //console.log(res.docs[0]._data)
             setOperations(res.docs)
         }
+        
+        search()
+        
+    },[])
 
+    const value = useMemo(() => {
         async function sumValues(){
             
             let x = 0;
 
             await operations.map((operation)=> {
                 if(operation._data.type == 'despesa'){
-                    x = x - operation._data.valor
+                    x = x - Number(operation._data.valor)
                 
                 }else{
-                    x = x + operation._data.valor
+                    x = x + Number(operation._data.valor)
                 }
             })
         
             setTotalValue(x)
         }
-        search()
-        
+
         sumValues()
-        
-    },[])
+    },[operations])
 
     return(
         <View style={{flex:1, paddingHorizontal: 12,paddingTop: StatusBar.currentHeight}}>
@@ -81,21 +140,21 @@ export default function Main(){
         
             <OperationsList
                 data={operations}
-                keyExtractor={operation => String(operation.index)}
+                keyExtractor={operation => String(operation.ID)}
                 showsVerticalScrollIndicator={true}
-                renderItem={(operation) => (
+                renderItem={({item}) => (
                     <OperationContainer>
                         <PropertyContainer>
                             <OperationProperty>Valor: </OperationProperty>
-                            <OperationValue type = {operation.item._data.type}>
-                                {operation.item._data.type === 'despesa' ? '-' : '+'}
-                                {operation.item._data.valor}
+                            <OperationValue type = {item._data.type}>
+                                {item._data.type === 'despesa' ? '-' : '+'}
+                                {item._data.valor}
                             </OperationValue>
                         </PropertyContainer>
 
                         <OperationButtomContainer>
-                            <OperationButtom onPress={() => console.log(operation.item._data.concluido)} value={'done'}>
-                                {operation.item._data.concluido === true ?
+                            <OperationButtom onPress={()=> handleDone(item)} value={'done'}>
+                                {item._data.concluido === true ?
                                     <DoneIcon name="done" size={20}
                                               color="#65BCBF" />
                                         : 
@@ -104,7 +163,7 @@ export default function Main(){
                                           color="#F8777D" />}
                             </OperationButtom>
 
-                            <OperationButtom onPress={() => console.log(operation.item._data.concluido)}>
+                            <OperationButtom onPress={() => handleDelete(item)}>
                                 <TrashIcon name="trash"
                                            size={20}
                                            /> 
