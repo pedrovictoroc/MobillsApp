@@ -18,9 +18,7 @@ import { Card,
          InputArea, 
          GoBackButton, 
          GoBackText,
-         ButtonSection, 
-         DateTrigger,
-         DateTriggerText } from './styles'
+         ButtonSection} from './styles'
 
 export default function NewOperation(){
 
