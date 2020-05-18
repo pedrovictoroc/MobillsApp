@@ -45,7 +45,7 @@ export const OperationsList = styled.FlatList`
     margin-top: 20px;
 ` 
 
-export const OperationContainer = styled.View`
+export const OperationContainer = styled.TouchableOpacity`
     flex-direction: row;
     justify-content: space-between;
     padding: 24px;

@@ -37,7 +37,7 @@ export default function NewOperation(){
     const navigator = useNavigation()
 
     function navigateToMain(){
-        navigator.navigate('Main')
+        navigator.goBack()
     }
 
     const switchDate = (event, selectedDate) =>{

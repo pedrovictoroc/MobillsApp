@@ -18,7 +18,7 @@ export default function SignUp(){
     const navigator = useNavigation()
 
     function navigateToLogin(){
-        navigator.navigate('Login')
+        navigator.goBack()
     }
 
     function navigateToMain(){

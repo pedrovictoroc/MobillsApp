@@ -34,6 +34,10 @@ export default function Main(){
         navigator.navigate('NewOperation')
     }
 
+    function navigateToDetails(item){
+        navigator.navigate('Details',{item})
+    }
+
     async function handleDelete({_data: data}){
         const res = await firestore()
               .collection('Usuarios')
@@ -143,7 +147,7 @@ export default function Main(){
                 keyExtractor={operation => String(operation.ID)}
                 showsVerticalScrollIndicator={true}
                 renderItem={({item}) => (
-                    <OperationContainer>
+                    <OperationContainer onPress={()=> navigateToDetails(item)}>
                         <PropertyContainer>
                             <OperationProperty>Valor: </OperationProperty>
                             <OperationValue type = {item._data.type}>

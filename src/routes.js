@@ -7,6 +7,7 @@ import Login from './Components/Login/Login'
 import SignUp from './Components/SignUp/SignUp'
 import Main from './Components/Main/Main'
 import NewOperation from './Components/NewOperation/NewOperation'
+import Details from './Components/Details/Details'
 
 const AppStack = createStackNavigator()
 
@@ -22,6 +23,7 @@ export default function Routes(){
                 <AppStack.Screen name="SignUp" component={SignUp}/>
                 <AppStack.Screen name="Main" component={Main}/>
                 <AppStack.Screen name="NewOperation" component={NewOperation}/>
+                <AppStack.Screen name="Details" component={Details}/>
             </AppStack.Navigator>
         </NavigationContainer>
     )
